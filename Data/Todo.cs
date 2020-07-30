@@ -6,6 +6,7 @@ namespace BlazorTraining.Data
 			Todo,
 			Progress,
 			Done,
+			Drop,
 		}
 		public string task;
 		public State state;
@@ -13,7 +14,8 @@ namespace BlazorTraining.Data
 			this.task = task;
 			this.state = state;
 		}
-		public void change() {
+		public void Change()
+		{
 			switch(this.state) {
 				case State.Todo:
 					this.state = State.Progress;
@@ -25,6 +27,10 @@ namespace BlazorTraining.Data
 					this.state = State.Todo;
 					break;
 			}
+		}
+		public void Drop()
+		{
+			this.state = State.Drop;
 		}
     }
 }

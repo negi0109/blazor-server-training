@@ -16,23 +16,29 @@
 		</tr>
 	</thead>
 	<tbody>
-		@for (int i = 0; i < MAX_LINE && i < service.todos.Count; i++)
+		@for (int i = 0; i < MAX_LINE && i < aliveTodoList.Count; i++)
 		{
 			<tr>
-				<td>@service.todos[i].task</td>
+				<td>@aliveTodoList[i].task</td>
 				<td>
 					<button
 						class="btn btn-primary"
-						@onclick="service.todos[i].change"
+						@onclick="aliveTodoList[i].Change"
 					>
-						@service.todos[i].state
+						@aliveTodoList[i].state
+					</button>
+					<button
+						class="btn btn-primary"
+						@onclick="aliveTodoList[i].Drop"
+					>
+						Drop
 					</button>
 				</td>
 			</tr>
 		}
-		@if (service.todos.Count > MAX_LINE)
+		@if (aliveTodoList.Count > MAX_LINE)
 		{
-			<p>他@(service.todos.Count - MAX_LINE)件</p>
+			<p>他@(aliveTodoList.Count - MAX_LINE)件</p>
 		}
 	</tbody>
 </table>
@@ -44,7 +50,14 @@
 	{
 		service.AddTodo(todoText);
 	}
-	private void Done(int number) {
-
+	private List<Todo> aliveTodoList {
+		get {
+			return service.todos.FindAll((Todo todo) => todo.state != Todo.State.Drop);
+		}
+	}
+	private List<Todo> dropTodoList {
+		get {
+			return service.todos.FindAll((Todo todo) => todo.state == Todo.State.Drop);
+		}
 	}
 }
