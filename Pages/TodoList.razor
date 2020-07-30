@@ -1,0 +1,63 @@
+﻿@page "/todos"
+
+@using BlazorTraining.Data
+@inject TodoListService service
+
+<h1>TODO リスト</h1>
+
+<input type="text" @bind="todoText">
+<button class="btn btn-primary" @onclick="AddDefaultTodo">TODO追加</button>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>タスク</th>
+			<th>状態</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for (int i = 0; i < MAX_LINE && i < aliveTodoList.Count; i++)
+		{
+			<tr>
+				<td>@aliveTodoList[i].task</td>
+				<td>
+					<button
+						class="btn btn-primary"
+						@onclick="aliveTodoList[i].Change"
+					>
+						@aliveTodoList[i].state
+					</button>
+					<button
+						class="btn btn-primary"
+						@onclick="aliveTodoList[i].Drop"
+					>
+						Drop
+					</button>
+				</td>
+			</tr>
+		}
+		@if (aliveTodoList.Count > MAX_LINE)
+		{
+			<p>他@(aliveTodoList.Count - MAX_LINE)件</p>
+		}
+	</tbody>
+</table>
+
+@code {
+	private const int MAX_LINE = 10;
+	private string todoText = "";
+	private void AddDefaultTodo()
+	{
+		service.AddTodo(todoText);
+	}
+	private List<Todo> aliveTodoList {
+		get {
+			return service.todos.FindAll((Todo todo) => todo.state != Todo.State.Drop);
+		}
+	}
+	private List<Todo> dropTodoList {
+		get {
+			return service.todos.FindAll((Todo todo) => todo.state == Todo.State.Drop);
+		}
+	}
+}
