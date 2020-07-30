@@ -20,7 +20,14 @@
 		{
 			<tr>
 				<td>@service.todos[i].task</td>
-				<td>@service.todos[i].state</td>
+				<td>
+					<button
+						class="btn btn-primary"
+						@onclick="service.todos[i].change"
+					>
+						@service.todos[i].state
+					</button>
+				</td>
 			</tr>
 		}
 		@if (service.todos.Count > MAX_LINE)
@@ -36,5 +43,8 @@
 	private void AddDefaultTodo()
 	{
 		service.AddTodo(todoText);
+	}
+	private void Done(int number) {
+
 	}
 }

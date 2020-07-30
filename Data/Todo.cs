@@ -13,5 +13,18 @@ namespace BlazorTraining.Data
 			this.task = task;
 			this.state = state;
 		}
+		public void change() {
+			switch(this.state) {
+				case State.Todo:
+					this.state = State.Progress;
+					break;
+				case State.Progress:
+					this.state = State.Done;
+					break;
+				case State.Done:
+					this.state = State.Todo;
+					break;
+			}
+		}
     }
 }
