@@ -5,6 +5,7 @@
 
 <h1>TODO リスト</h1>
 
+<input type="text" @bind="todoText">
 <button class="btn btn-primary" @onclick="AddDefaultTodo">TODO追加</button>
 
 <table class="table">
@@ -31,8 +32,9 @@
 
 @code {
 	private const int MAX_LINE = 10;
+	private string todoText = "";
 	private void AddDefaultTodo()
 	{
-		service.AddTodo($"task {service.todos.Count + 1}");
+		service.AddTodo(todoText);
 	}
 }
