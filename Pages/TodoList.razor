@@ -1,0 +1,38 @@
+﻿@page "/todos"
+
+@using BlazorTraining.Data
+@inject TodoListService service
+
+<h1>TODO リスト</h1>
+
+<button class="btn btn-primary" @onclick="AddDefaultTodo">TODO追加</button>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>タスク</th>
+			<th>状態</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for (int i = 0; i < MAX_LINE && i < service.todos.Count; i++)
+		{
+			<tr>
+				<td>@service.todos[i].task</td>
+				<td>@service.todos[i].state</td>
+			</tr>
+		}
+		@if (service.todos.Count > MAX_LINE)
+		{
+			<p>他@(service.todos.Count - MAX_LINE)件</p>
+		}
+	</tbody>
+</table>
+
+@code {
+	private const int MAX_LINE = 10;
+	private void AddDefaultTodo()
+	{
+		service.AddTodo($"task {service.todos.Count + 1}");
+	}
+}
